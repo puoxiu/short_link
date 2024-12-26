@@ -23,8 +23,9 @@ func NewCreateURLLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateU
 	}
 }
 
+// CreateURL 创建短链接
 func (l *CreateURLLogic) CreateURL(req *types.CreateURLRequest) (resp *types.CreateURLResponse, err error) {
-	// todo: add your logic here and delete this line
+	
 
 	return
 }

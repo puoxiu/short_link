@@ -3,6 +3,7 @@ module short_link_svc
 go 1.23.3
 
 require (
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/zeromicro/go-zero v1.7.4
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.12
@@ -26,6 +27,7 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
+	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/openzipkin/zipkin-go v0.4.3 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/prometheus/client_golang v1.20.5 // indirect

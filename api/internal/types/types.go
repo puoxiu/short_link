@@ -2,9 +2,9 @@
 package types
 
 type CreateURLRequest struct {
-	OriginalRrl string `json:"original_url"`
-	CustomCode  string `json:"custom_code,omitempty"`
-	Duration    *int   `json:"duration,omitempty"`
+	OriginalRrl string `json:"original_url" validate:"required,url"`
+	CustomCode  string `json:"custom_code,omitempty" validate:"omitempty,max=10,min=4,alphanum"`
+	Duration    *int   `json:"duration,omitempty" validate:"omitempty,min=1,max=365"`
 }
 
 type CreateURLResponse struct {

@@ -3,3 +3,17 @@ Host: 0.0.0.0
 Port: 8888
 
 
+Mysql:
+  DataSource: root:root@tcp(127.0.0.1:13306)/short_link_db?charset=utf8mb4&parseTime=True&loc=Local
+
+Redis:
+  Addr: 127.0.0.1:16379
+  Password: ""
+  DB: 0
+
+# go-zero log config,默认使用logx的日志库，可以修改参数改变输出格式
+Log:
+  Encoding: plain
+  TimeFormat: 2006-01-02 15:04:05
+  Stat: false
+  
