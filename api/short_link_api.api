@@ -1,0 +1,23 @@
+syntax = "v1"
+
+info (
+	title: "short_link_API",
+	version: "1.0.0"
+)
+type CreateURLRequest {
+	OriginalRrl string `json:"original_url"`
+	CustomCode  string `json:"custom_code,omitempty"`
+	Duration    *int   `json:"duration,omitempty"`
+}
+type CreateURLResponse {
+	ShortLink string `json:"short_link"`
+	ExpireAt  string `json:"expire_at"`
+}
+
+service urls {
+	@handler CreateURL
+	post /api/url (CreateURLRequest) returns(CreateURLResponse)
+}
+
+//
+// goctl api go -api ./short_link_api.api -dir .
