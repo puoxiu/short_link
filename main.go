@@ -18,7 +18,7 @@ func main() {
 	flag.Parse()
 
 	if opt.DB {
-		db := core.InitGorm("root:root@tcp(127.0.0.1:13306)/qwq_server_db?charset=utf8mb4&parseTime=True&loc=Local")
+		db := core.InitGorm("root:root@tcp(127.0.0.1:13306)/short_link_db?charset=utf8mb4&parseTime=True&loc=Local")
 		err := db.AutoMigrate(&urlsmodel.UrlsModel{},
 		)
 		if err != nil {

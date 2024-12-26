@@ -1,5 +1,6 @@
+create database if not exists short_link_db;
 
-
+use short_link_db;
 create table if not exists urls (
     id int primary key auto_increment,
     long_link varchar(255) not null,
