@@ -1,0 +1,56 @@
+syntax = "v1"
+
+info (
+	title: "short_link auth service",
+	desc: "auth service api"
+	author: "xing"
+	email: "zmxhello@gmail.com"
+	version: "v1"
+)
+
+type SignupRequest {
+	Username   string `json:"username" validate:"required"`
+	Password   string `json:"password" validate:"required"`
+	RePassword string `json:"rePassword" validate:"required"`
+}
+type SignupResponse {
+	Message string `json:"message"`
+}
+
+type LoginRequest {
+	Username string `json:"username" validate:"required"`
+	Password string `json:"password" validate:"required"`
+}
+type LoginResponse {
+	Token string `json:"token"`
+}
+
+type AuthenticationRequest {
+	Token     string `header:"Token,optional"`
+	ValidPath string `header:"ValidPath,optional"`
+}
+
+type AuthenticationResponse {
+	// UserID uint `json:"userID"`
+	// Role   int  `json:"role"`
+	Username string `json:"username"`
+}
+
+service auth {
+	// 注册
+	@handler SignupHandler
+	post /api/auth/signup(SignupRequest) returns (SignupResponse)
+
+	// 登录
+	@handler LoginHandler
+	post /api/auth/login(LoginRequest) returns (LoginResponse)
+
+	// 认证
+	@handler authentication
+	post /api/auth/authentication (AuthenticationRequest)returns (AuthenticationResponse) // 认证接口
+}
+
+// goctl api go -api auth_api.api -dir .
+
+// model
+// goctl model mysql datasource -url="root:root@tcp(127.0.0.1:13316)/shortener" -table="user" -dir="./auth_models"

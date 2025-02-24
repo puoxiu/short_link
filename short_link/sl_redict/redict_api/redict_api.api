@@ -1,0 +1,22 @@
+syntax = "v1"
+
+type (
+	ShowRequest {
+		ShortUrl string `path:"shortUrl" validate:"required"`
+	}
+	ShowResponse {
+		LongUrl string `json:"longUrl"`
+	}
+)
+
+@server(
+	middleware: ClientIPMiddleware
+)
+service redict {
+	//
+	@handler ShowHandler
+	post /api/redict/:shortUrl(ShowRequest) returns (ShowResponse)
+
+}
+
+// goctl api go -api redict_api.api -dir .

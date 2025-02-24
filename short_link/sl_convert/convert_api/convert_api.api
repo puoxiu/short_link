@@ -1,0 +1,18 @@
+syntax = "v1"
+
+type (
+	ConvertRequest {
+		LongUrl string `json:"longUrl" validate:"required"`
+	}
+	ConvertResponse {
+		ShortUrl string `json:"shortUrl"`
+	}
+) 
+
+service convert {
+	@handler ConvertHandler
+	post /api/convert/link(ConvertRequest) returns (ConvertResponse)
+
+}
+
+// goctl api go -api convert_api.api -dir .
