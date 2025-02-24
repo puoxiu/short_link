@@ -1,3 +1,15 @@
 Name: redict
 Host: 0.0.0.0
-Port: 8888
+Port: 8962
+
+ShortUrlDB:
+  DSN: root:root@tcp(127.0.0.1:13316)/shortener?charset=utf8mb4&parseTime=True&loc=Local
+
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+
+
+BloomFilterKey: "bloom_filter"
+BloomFilterRedisLockKey: "bf_lock_key"
+BloomFilterLockTime: 5
