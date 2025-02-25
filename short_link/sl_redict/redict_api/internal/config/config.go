@@ -17,5 +17,5 @@ type Config struct {
 	BloomFilterLockTime int
 
 	CacheRedis cache.CacheConf	// 添加缓存配置
-
+	Etcd string
 }

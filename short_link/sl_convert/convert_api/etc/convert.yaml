@@ -14,6 +14,9 @@ ShortDomain: http:113.45.244.49/
 CacheRedis:
   - Host: 127.0.0.1:6379
 
+
 BloomFilterKey: "bloom_filter"
 BloomFilterRedisLockKey: "bf_lock_key"
 BloomFilterLockTime: 5
+
+Etcd: 127.0.0.1:2379

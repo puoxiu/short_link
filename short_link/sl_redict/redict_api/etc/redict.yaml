@@ -13,3 +13,5 @@ CacheRedis:
 BloomFilterKey: "bloom_filter"
 BloomFilterRedisLockKey: "bf_lock_key"
 BloomFilterLockTime: 5
+
+Etcd: 127.0.0.1:2379

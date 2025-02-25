@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 
+	"short_link_pro/common/etcd"
 	"short_link_pro/sl_convert/convert_api/internal/config"
 	"short_link_pro/sl_convert/convert_api/internal/handler"
 	"short_link_pro/sl_convert/convert_api/internal/svc"
@@ -25,6 +26,9 @@ func main() {
 
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)
+
+	// 将服务地址上送到 etcd： key：auth_api ---》 value：服务地址(ip:port)
+	etcd.DeliveryAddress(c.Etcd, c.Name + "_api", fmt.Sprintf("%s:%d", c.Host, c.Port))
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
