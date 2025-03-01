@@ -1,6 +1,8 @@
+
 package etcd
 
-import "github.com/coreos/etcd/clientv3"
+import clientv3 "go.etcd.io/etcd/client/v3"
+
 
 // etcd客户端
 func InitEtcd(addr string) *clientv3.Client {

@@ -12,5 +12,6 @@ Auth:
   AccessExpire: 7200
 
 WhiteList:
-  - /api/user/login
+  - /api/auth/login
+  - /api/auth/signup
   - /api/auth/authentication

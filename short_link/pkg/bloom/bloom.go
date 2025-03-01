@@ -40,7 +40,7 @@ func NewBloomFilter(RedisAddr, BloomFilterKey, LockKey string, LockTimeout time.
 
 // Add 向布隆过滤器中添加一个元素
 func (bf *BloomFilter) Add(ctx context.Context, item string) error {
-	fmt.Println("添加Add item: ", item)
+	// fmt.Println("添加Add item: ", item)
     mutex := bf.rs.NewMutex(bf.lockKey, redsync.WithExpiry(bf.lockTimeout))
     if err := mutex.LockContext(ctx); err != nil {
         return err

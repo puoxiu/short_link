@@ -40,7 +40,7 @@ func auth(authAddr string, res http.ResponseWriter, req *http.Request) (bool) {
 	authRes, err := http.DefaultClient.Do(authReq)	
 	if err != nil {
 		// 认证服务错误
-		gateway_error.FailResponse("认证服务错误", res)
+		gateway_error.FailResponse("认证服务错误1", res)
 		return false
 	}
 	defer authRes.Body.Close()
@@ -57,7 +57,7 @@ func auth(authAddr string, res http.ResponseWriter, req *http.Request) (bool) {
 	if err != nil {
 		// 认证服务错误
 		fmt.Println(err)
-		gateway_error.FailResponse("认证服务错误", res)
+		gateway_error.FailResponse("认证服务错误2", res)
 
 		return false
 	}
@@ -124,11 +124,13 @@ func proxy(serverice string, res http.ResponseWriter, req *http.Request) {
 
 // gateway 函数是主网关处理逻辑，用于将请求转发到相应的服务
 func gateway(res http.ResponseWriter, req *http.Request) {
+	fmt.Println("gateway")
 	// 请求认证服务地址
 	authAddr := etcd.GetServiceAddress(config.Etcd, "auth_api")
 	authUrl := fmt.Sprintf("http://%s/api/auth/authentication", authAddr)
 	// 认证--token鉴权
 	if !auth(authUrl, res, req) {
+		fmt.Println("认证失败")
 		return
 	}
 
