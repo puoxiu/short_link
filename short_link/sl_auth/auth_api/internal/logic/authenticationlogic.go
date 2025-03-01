@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 
 	"short_link_pro/pkg"
 	jwts "short_link_pro/pkg/jwt"
@@ -35,12 +36,18 @@ func (l *AuthenticationLogic) Authentication(req *types.AuthenticationRequest) (
 	}
 
 	if req.Token == "" {
-		err = errors.New("认证失败1")
+		err = errors.New("认证失败, token为空")
 		return
 	}
-	claims, err := jwts.ParseToken(req.Token, l.svcCtx.Config.Auth.AccessSecret)
+	fmt.Println("auth token:", req.Token)
+	parts := strings.Split(req.Token, " ")
+	if len(parts) != 2 || parts[0] != "Bearer" {
+		err = errors.New("认证失败, token格式错误")
+		return
+	}
+	claims, err := jwts.ParseToken(parts[1], l.svcCtx.Config.Auth.AccessSecret)
 	if err != nil {
-		err = errors.New("认证失败2")
+		err = errors.New("认证失败, token解析失败")
 		return
 	}
 

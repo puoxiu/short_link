@@ -34,9 +34,10 @@ type Config struct {
 // auth 函数用于认证请求
 func auth(authAddr string, res http.ResponseWriter, req *http.Request) (bool) {
 	authReq, _ := http.NewRequest("POST", authAddr, nil)
-
+	authHeader := req.Header.Get("Authorization")
 	authReq.Header = req.Header
 	authReq.Header.Set("ValidPath", req.URL.Path)
+	authReq.Header.Set("Token", authHeader)
 	authRes, err := http.DefaultClient.Do(authReq)	
 	if err != nil {
 		// 认证服务错误
@@ -48,7 +49,7 @@ func auth(authAddr string, res http.ResponseWriter, req *http.Request) (bool) {
 		Code int    `json:"code"`
 		Msg  string `json:"msg"`
 		Data *struct {
-			Username uint `json:"username"`
+			Username string `json:"username"`
 		} `json:"data"`
 	}
 	var authResponse Response
@@ -69,7 +70,7 @@ func auth(authAddr string, res http.ResponseWriter, req *http.Request) (bool) {
 	// 认证通过
 	// 请求头中添加用户ID和角色信息--用于后续服务
 	if authResponse.Data != nil {
-		req.Header.Set("Username", fmt.Sprintf("%d", authResponse.Data.Username))
+		req.Header.Set("Username", authResponse.Data.Username)
 	}
 
 	return true
