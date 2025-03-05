@@ -12,6 +12,7 @@ CacheRedis:
 
 BloomFilterKey: "bloom_filter"
 BloomFilterRedisLockKey: "bf_lock_key"
+# 布隆过滤器锁的过期时间为5s
 BloomFilterLockTime: 5
 
 Etcd: 127.0.0.1:2379

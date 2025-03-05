@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"short_link_pro/pkg/bloom"
+	"short_link_pro/pkg/bloomv2"
 	"short_link_pro/shorturlmapmodel"
 	"short_link_pro/sl_redict/redict_api/internal/config"
 	"short_link_pro/sl_redict/redict_api/internal/middleware"
@@ -19,7 +19,7 @@ type ServiceContext struct {
 	ShortUrlMapModel shorturlmapmodel.ShortUrlMapModel
 	ShortUrlAccessLogModel redict_models.ShortUrlAccessLogModel
 	// bloom filter
-	BloomFilter *bloom.BloomFilter
+	BloomFilter *bloomv2.BloomFilter
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -31,7 +31,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 
 		ShortUrlMapModel: shorturlmapmodel.NewShortUrlMapModel(conn, c.CacheRedis),
 		ShortUrlAccessLogModel: redict_models.NewShortUrlAccessLogModel(conn),
-		BloomFilter: bloom.NewBloomFilter(c.CacheRedis[0].Host, c.BloomFilterKey, c.BloomFilterRedisLockKey, time.Duration(c.BloomFilterLockTime)*time.Second),
+		BloomFilter: bloomv2.NewBloomFilter(c.CacheRedis[0].Host, c.BloomFilterKey, c.BloomFilterRedisLockKey, time.Duration(c.BloomFilterLockTime)*time.Second),
 
 	}
 }
