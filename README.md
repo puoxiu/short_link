@@ -9,9 +9,13 @@
 
 
 
+## 说明
+* 实际运行时各个微服务不暴露给用户，只留一个网关接口（port：8080）
+* todo：设计更加强大的网关
+
+
 ## 启动步骤
 > 修改各个微服务的配置文件
-
 * docker-compose up
 * go run gateway.go
 * go run auth.go
@@ -23,5 +27,7 @@ Go-Zero
 MySQL
 Redis
 jwt
+Kafka
+bloom过滤
 ...
 
