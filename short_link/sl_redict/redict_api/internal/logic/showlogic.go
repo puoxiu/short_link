@@ -43,7 +43,7 @@ func (l *ShowLogic) Show(req *types.ShowRequest) (resp *types.ShowResponse, err 
 		return nil, errors.New("404, 短链接不存在1")
 	}
 
-	// 根据短链接查询原始链接
+	// 存在于布隆过滤器, 根据短链接查询原始链接
 	u, err := l.svcCtx.ShortUrlMapModel.FindOneBySurl(l.ctx, sql.NullString{String: req.ShortUrl, Valid: true})
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -67,19 +67,13 @@ func (l *ShowLogic) Show(req *types.ShowRequest) (resp *types.ShowResponse, err 
 	return resp, nil
 }
 
-// saveAccessLog2DB 保存访问日志到数据库
+// saveAccessLog2DB 保存访问记录到数据库
 func saveAccessLog2DB(svcCtx *svc.ServiceContext, shortUrlId int64, clientIp, clientAgent string) {
 	country, region, city, err := ip.GetLocation(clientIp)
 	if err != nil {
 		logx.Errorw("获取访问者信息失败", logx.LogField{Key: "err", Value: err})
 		return
 	}
-	fmt.Println("ShortUrlId:", shortUrlId)
-	fmt.Println("ip:", clientIp)
-	fmt.Println("agent:", clientAgent)
-	fmt.Println("country:", country)
-	fmt.Println("region:", region)
-	fmt.Println("city:", city)
 
 	// 存储
 	dbCtx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)

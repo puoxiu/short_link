@@ -29,7 +29,7 @@ func NewAuthenticationLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Au
 }
 
 func (l *AuthenticationLogic) Authentication(req *types.AuthenticationRequest) (resp *types.AuthenticationResponse, err error) {
-	fmt.Println("收到请求：", req.ValidPath)
+	// fmt.Println("收到请求：", req.ValidPath)
 	if pkg.InlistByRegs(l.svcCtx.Config.WhiteList, req.ValidPath) {
 		logx.Infof("白名单请求：%s", req.ValidPath)
 		return

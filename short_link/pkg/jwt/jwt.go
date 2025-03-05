@@ -10,7 +10,6 @@ import (
 type JwtPayLoad struct {
     UserID   uint   `json:"userID"`
     Username string `json:"username"` // 用户名
-    // Role     int8    `json:"role"`     // 权限  1 管理员  2 普通用户
 }
 
 type CustomClaims struct {
