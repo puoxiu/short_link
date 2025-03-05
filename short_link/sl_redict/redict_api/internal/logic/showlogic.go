@@ -74,12 +74,6 @@ func saveAccessLog2DB(svcCtx *svc.ServiceContext, shortUrlId int64, clientIp, cl
 		logx.Errorw("获取访问者信息失败", logx.LogField{Key: "err", Value: err})
 		return
 	}
-	fmt.Println("ShortUrlId:", shortUrlId)
-	fmt.Println("ip:", clientIp)
-	fmt.Println("agent:", clientAgent)
-	fmt.Println("country:", country)
-	fmt.Println("region:", region)
-	fmt.Println("city:", city)
 
 	// 存储
 	dbCtx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
