@@ -32,9 +32,9 @@ func NewShowLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ShowLogic {
 
 
 // Show 查看短链接, 将输入的短链接重定向到原始链接
-func (l *ShowLogic) Show(req *types.ShowRequest) (resp *types.ShowResponse, err error) {
+func (l *ShowLogic) Show(shortUrl string) (resp *types.ShowResponse, err error) {
 	// 查询布隆过滤器
-	exists, err := l.svcCtx.BloomFilter.Contains(l.ctx, req.ShortUrl)
+	exists, err := l.svcCtx.BloomFilter.Contains(l.ctx, shortUrl)
 	if err != nil {
 		logx.Errorw("查询布隆过滤器失败", logx.LogField{Key: "err", Value: err})
 		return nil, err
@@ -44,7 +44,7 @@ func (l *ShowLogic) Show(req *types.ShowRequest) (resp *types.ShowResponse, err 
 	}
 
 	// 存在于布隆过滤器, 根据短链接查询原始链接
-	u, err := l.svcCtx.ShortUrlMapModel.FindOneBySurl(l.ctx, sql.NullString{String: req.ShortUrl, Valid: true})
+	u, err := l.svcCtx.ShortUrlMapModel.FindOneBySurl(l.ctx, sql.NullString{String: shortUrl, Valid: true})
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, errors.New("404, 短链接不存在2")

@@ -3,22 +3,26 @@ package handler
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"short_link_pro/sl_redict/redict_api/internal/logic"
 	"short_link_pro/sl_redict/redict_api/internal/svc"
 	"short_link_pro/sl_redict/redict_api/internal/types"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
+
 
 func ShowHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.ShowRequest
-		if err := httpx.Parse(r, &req); err != nil {
+		err := httpx.Parse(r, &req) 
+		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
 		l := logic.NewShowLogic(r.Context(), svcCtx)
-		resp, err := l.Show(&req)
+
+		resp, err := l.Show(req.ShortUrl)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
