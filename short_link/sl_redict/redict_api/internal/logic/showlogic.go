@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 	"time"
 
 	"short_link_pro/pkg/ip"
@@ -79,7 +78,6 @@ func saveAccessLog2DB(svcCtx *svc.ServiceContext, shortUrlId int64, clientIp, cl
 	dbCtx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
 	defer cancel()
 
-	fmt.Println("正常")
 	if _, err := svcCtx.ShortUrlAccessLogModel.Insert(
 		dbCtx, 
 		&redict_models.ShortUrlAccessLog{

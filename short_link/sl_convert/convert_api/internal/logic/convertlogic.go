@@ -3,11 +3,10 @@ package logic
 import (
 	"context"
 	"database/sql"
-	"errors"
 	"fmt"
 
 	"short_link_pro/pkg/base62"
-	"short_link_pro/pkg/connect"
+	// "short_link_pro/pkg/connect"
 	md5 "short_link_pro/pkg/mds"
 	"short_link_pro/pkg/urltool"
 	"short_link_pro/shorturlmapmodel"
@@ -38,10 +37,10 @@ func (l *ConvertLogic) Convert(req *types.ConvertRequest) (resp *types.ConvertRe
 	// 1. 校验输入合法性
 	// 1.1 数据非空
 	// 1.2 输入的长链接必须是正常访问
-	if !connect.Get(req.LongUrl) {
-		// err = ErrUrlInvalid
-		return nil, errors.New("url invalid")
-	}
+	// if !connect.Get(req.LongUrl) {
+	// 	// err = ErrUrlInvalid
+	// 	return nil, errors.New("url invalid")
+	// }
 
 	// 1.3 长链接是否已经存在(md5)--查db
 	md5 := md5.Cal(req.LongUrl)
@@ -79,7 +78,6 @@ func (l *ConvertLogic) Convert(req *types.ConvertRequest) (resp *types.ConvertRe
 			logx.Errorw("next number failed", logx.LogField{Key: "err", Value: err})
 			return nil, err
 		}
-		fmt.Println("seq: ", seq)
 
 		// 3. 号码转短链接（62进制）
 		// todo 安全性考虑--修改62进制字符串打乱

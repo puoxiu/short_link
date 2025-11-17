@@ -129,7 +129,7 @@ func (bf *BloomFilter) Contains(ctx context.Context, item string) (bool, error) 
         return false, err
     }
 	if bit1 == 1 && bit2 == 1 {
-		fmt.Println("布隆过滤器Contains item: ", item)
+		// fmt.Println("布隆过滤器Contains item: ", item)
 		return true, nil
 	}
 
