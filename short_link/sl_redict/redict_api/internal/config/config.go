@@ -1,6 +1,8 @@
 package config
 
 import (
+	"time"
+
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/rest"
 )
@@ -18,4 +20,9 @@ type Config struct {
 
 	CacheRedis cache.CacheConf	// 添加缓存配置
 	Etcd string
+
+	BigCache struct {
+		Expiration time.Duration
+		MaxEntries int
+	}
 }

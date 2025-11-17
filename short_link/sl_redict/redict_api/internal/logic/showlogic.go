@@ -32,6 +32,17 @@ func NewShowLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ShowLogic {
 
 // Show 查看短链接, 将输入的短链接重定向到原始链接
 func (l *ShowLogic) Show(shortUrl string) (resp *types.ShowResponse, err error) {
+	// 优先查本地缓存
+	longUrl, err := l.svcCtx.LocalCacheHundler.Get(shortUrl)
+	if err != nil {
+		logx.Errorw("查询本地缓存失败", logx.LogField{Key: "err", Value: err})
+		return nil, err
+	}
+	if longUrl != "" {
+		// 本地缓存命中
+		return &types.ShowResponse{LongUrl: longUrl}, nil
+	}
+
 	// 查询布隆过滤器
 	exists, err := l.svcCtx.BloomFilter.Contains(l.ctx, shortUrl)
 	if err != nil {
@@ -51,6 +62,10 @@ func (l *ShowLogic) Show(shortUrl string) (resp *types.ShowResponse, err error) 
 		logx.Errorw("查询短链接失败", logx.LogField{Key: "err", Value: err})
 		return nil, err
 	}
+
+	// 缓存原始链接到本地缓存
+	l.svcCtx.LocalCacheHundler.Set(shortUrl, u.Lurl.String)
+
 	clientIp, clientAgent := "unknown", "unknown"
 	if ip, ok := l.ctx.Value(constants.UserIPKey).(string); ok {
 		clientIp = ip

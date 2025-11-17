@@ -8,6 +8,7 @@ ShortUrlDB:
 
 CacheRedis:
   - Host: 127.0.0.1:6379
+    Expiry: 20m
 
 
 BloomFilterKey: "bloom_filter"
@@ -16,3 +17,8 @@ BloomFilterRedisLockKey: "bf_lock_key"
 BloomFilterLockTime: 5
 
 Etcd: 127.0.0.1:2379
+
+# 本地缓存
+BigCache:
+  Expiration: 10m
+  MaxEntries: 10000  # 最大缓存1万条数据
